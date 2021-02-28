@@ -6,38 +6,35 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import com.example.activityresultapitest.databinding.ActivityResultBinding
 
 class ResultActivity : AppCompatActivity() {
-
+    private lateinit var binding: ActivityResultBinding
+    val resultIntent = Intent()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_result)
+        binding = ActivityResultBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val textView = findViewById<TextView>(R.id.text_view_numbers)
-        val buttonAdd = findViewById<Button>(R.id.button_add)
-        val buttoSub = findViewById<Button>(R.id.button_subtract)
-
-        val intent = getIntent()
+        val intent = intent
         val number1 = intent.getIntExtra("number1",0)
         val number2 = intent.getIntExtra("number2",0)
 
-        textView.text = "Numbers: " + number1 + ", " + number2
-        buttonAdd.setOnClickListener {
+        binding.textViewNumbers.text = "Numbers: " + number1 + ", " + number2
+        binding.buttonAdd.setOnClickListener {
             val result = number1 + number2
 
-            val resultIntent = Intent()
             resultIntent.putExtra("result",result)
 
             setResult(RESULT_OK, resultIntent)
             finish()
         }
 
-        buttoSub.setOnClickListener {
+        binding.buttonSubtract.setOnClickListener {
             val result = number1 - number2
 
-            val resultIntent = Intent()
             resultIntent.putExtra("result",result)
             setResult(RESULT_OK, resultIntent)
             finish()
